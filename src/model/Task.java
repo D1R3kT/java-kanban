@@ -8,59 +8,56 @@ public class Task {
     private String description;
     protected Status status;
 
+    public Task(Status status, String name, String description) {
+        this.status = status;
+        this.name = name;
+        this.description = description;
+    }
 
-
-    public Task(int id, Status status, String name, String description){
+    public Task(int id, Status status, String name, String description) {
         this.id = id;
         this.status = status;
         this.name = name;
         this.description = description;
     }
 
-    public Task(Status status, String name, String description){
-        this.status = status;
-        this.name = name;
-        this.description = description;
-    }
-
-    public Status getStatus(){
-        return status;
-    }
-
-    public void setStatus(Status status){
-        this.status = status;
-    }
-
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
+    public Status getStatus() {
+        return status;
+    }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
         return "Task{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
@@ -71,8 +68,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) &&
-                status == task.status;
+        return id == task.id && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status;
     }
 
     @Override

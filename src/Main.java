@@ -26,7 +26,7 @@ public class Main {
 
         SubTask subTask1 = taskManager.createSubTask(new SubTask(Status.NEW, "Подзадача 1", "Описание1", epic1));
         SubTask subTask2 = taskManager.createSubTask(new SubTask(Status.NEW, "Подзадача 2", "Описание2", epic1));
-        SubTask subTask3 = taskManager.createSubTask(new SubTask(Status.NEW, "Подзадача 1", "Описание3", epic2));
+        SubTask subTask3 = taskManager.createSubTask(new SubTask(Status.IN_PROGRESS, "Подзадача 1", "Описание3", epic2));
         taskManager.updateEpic(epic1);
         taskManager.updateEpic(epic2);
 
@@ -45,9 +45,9 @@ public class Main {
         taskManager.updateTask(task2Updated);
         System.out.println("update task " + task2Updated);
 
-        SubTask subTask1Update = new SubTask(subTask1.getId(), Status.DONE, subTask1.getName(), subTask1.getDescription(),subTask1.getEpic());
-        SubTask subTask2Update = new SubTask(subTask2.getId(), Status.NEW, subTask2.getName(), subTask2.getDescription(),subTask2.getEpic());
-        SubTask subTask3Update = new SubTask(subTask3.getId(), Status.DONE, subTask3.getName(), subTask3.getDescription(),subTask3.getEpic());
+        SubTask subTask1Update = new SubTask(subTask1.getId(), Status.DONE, subTask1.getName(), subTask1.getDescription(),epic1);
+        SubTask subTask2Update = new SubTask(subTask2.getId(), Status.NEW, subTask2.getName(), subTask2.getDescription(),epic1);
+        SubTask subTask3Update = new SubTask(subTask3.getId(), Status.DONE, subTask3.getName(), subTask3.getDescription(),epic2);
         taskManager.updateSubTask(subTask1Update);
         taskManager.updateSubTask(subTask2Update);
         taskManager.updateSubTask(subTask3Update);
