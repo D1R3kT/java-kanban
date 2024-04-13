@@ -20,8 +20,8 @@ public class TaskManager {
 
     // методы Task
 
-    public HashMap<Integer, Task> getAllTAsks() {
-        return tasks;
+    public ArrayList<Task> getAllTasks() {
+        return new ArrayList<>(tasks.values());
     }
 
     public void removeAllTasks() {
@@ -46,13 +46,18 @@ public class TaskManager {
         if (task == null) {
             return;
         }
-        tasks.put(task.getId(), task);
+        if (tasks.containsKey(task.getId())){
+            tasks.put(task.getId(), task);
+        } else {
+            return;
+        }
+
     }
 
     // методы SubTask
 
-    public HashMap<Integer, SubTask> getAllSubTasks() {
-        return subTasks;
+    public ArrayList<SubTask> getAllSubTasks() {
+        return new ArrayList<>(subTasks.values());
     }
 
     public void removeAllSubTasks() {
@@ -84,18 +89,21 @@ public class TaskManager {
         if (saved == null) {
             return;
         }
-        saved.setName(subTask.getName());
-        saved.setDescription(subTask.getDescription());
-        saved.setStatus(subTask.getStatus());
-        saved.setEpicId(subTask.getEpicId());
-
-        subTasks.put(subTask.getId(), saved);
+        if (subTasks.containsKey(subTask.getId())){
+            saved.setName(subTask.getName());
+            saved.setDescription(subTask.getDescription());
+            saved.setStatus(subTask.getStatus());
+            saved.setEpicId(subTask.getEpicId());
+            subTasks.put(subTask.getId(), saved);
+        } else {
+            return;
+        }
     }
 
     // методы Epic
 
-    public HashMap<Integer, Epic> getAllEpics() {
-        return epics;
+    public ArrayList<Epic> getAllEpics() {
+        return new ArrayList<>(epics.values());
     }
 
     public void removeAllEpics() {
@@ -122,10 +130,15 @@ public class TaskManager {
         if (saved == null) {
             return;
         }
-        saved.setName(epic.getName());
-        saved.setDescription(epic.getDescription());
-        saved.setStatus(updateStatus(epic));
-        epics.put(epic.getId(), saved);
+        if (epics.containsKey(epic.getId())){
+            saved.setName(epic.getName());
+            saved.setDescription(epic.getDescription());
+            saved.setStatus(updateStatus(epic));
+            epics.put(epic.getId(), saved);
+        } else{
+            return;
+        }
+
     }
 
     public Status updateStatus(Epic epic) {
