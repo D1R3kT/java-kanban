@@ -3,6 +3,9 @@ import model.Epic;
 import model.SubTask;
 import model.Status;
 
+import service.HistoryManager;
+import service.InMemoryHistoryManager;
+import service.InMemoryTaskManager;
 import service.TaskManager;
 
 
@@ -10,13 +13,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        TaskManager taskManager = new TaskManager();
+        HistoryManager historyManager = new InMemoryHistoryManager();
+        TaskManager taskManager = new InMemoryTaskManager(historyManager);
 
         Task task1 =  taskManager.createTask(new Task(Status.NEW,"учеба", "12341"));
         System.out.println("created " + task1);
 
         Task task2 = taskManager.createTask(new Task(Status.NEW,"работа", "1234"));
         System.out.println("created " + task2);
+
+
 
 
         Epic epic1 = taskManager.createEpic(new Epic("Эпик1", "Описание1"));
