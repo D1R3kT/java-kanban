@@ -6,12 +6,13 @@ import model.SubTask;
 import model.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-     HashMap<Integer, Task> tasks;
-     HashMap<Integer, SubTask> subTasks;
-     HashMap<Integer, Epic> epics;
+     Map<Integer, Task> tasks;
+     Map<Integer, SubTask> subTasks;
+     Map<Integer, Epic> epics;
      HistoryManager historyManager;
 
     public InMemoryTaskManager(HistoryManager historyManager){
