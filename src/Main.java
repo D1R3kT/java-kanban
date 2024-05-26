@@ -67,5 +67,11 @@ public class Main {
         System.out.println("epic1: " + epic1);
         System.out.println("epic2: " + epic2);
 
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
+        historyManager.remove(1);
+
+        System.out.println(historyManager.getHistory());
+
     }
 }

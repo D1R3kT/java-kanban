@@ -21,6 +21,12 @@ public class Task {
         this.description = description;
     }
 
+    public Task (int id, String name) {
+        this.name = name;
+        this.id = id;
+
+    }
+
     public int getId() {
         return id;
     }
