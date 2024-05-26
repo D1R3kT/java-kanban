@@ -15,7 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
      Map<Integer, Epic> epics;
      HistoryManager historyManager;
 
-    public InMemoryTaskManager(HistoryManager historyManager){
+    public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         this.tasks = new HashMap<>();
         this.subTasks = new HashMap<>();
@@ -63,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (task == null) {
             return;
         }
-        if (tasks.containsKey(task.getId())){
+        if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
         } else {
             return;
@@ -113,7 +113,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (saved == null) {
             return;
         }
-        if (subTasks.containsKey(subTask.getId())){
+        if (subTasks.containsKey(subTask.getId())) {
             saved.setName(subTask.getName());
             saved.setDescription(subTask.getDescription());
             saved.setStatus(subTask.getStatus());
@@ -161,13 +161,11 @@ public class InMemoryTaskManager implements TaskManager {
         if (saved == null) {
             return;
         }
-        if (epics.containsKey(epic.getId())){
+        if (epics.containsKey(epic.getId())) {
             saved.setName(epic.getName());
             saved.setDescription(epic.getDescription());
             saved.setStatus(updateStatus(epic));
             epics.put(epic.getId(), saved);
-        } else{
-            return;
         }
 
     }
@@ -184,9 +182,9 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subTasksId) {
             if (subTasks.get(id).getStatus().equals(Status.NEW)){
                 statusNew++;
-            } else if (subTasks.get(id).getStatus().equals(Status.IN_PROGRESS)) {
+            }else if (subTasks.get(id).getStatus().equals(Status.IN_PROGRESS)){
                 statusProgress++;
-            } else if (subTasks.get(id).getStatus().equals(Status.DONE)) {
+            }else if (subTasks.get(id).getStatus().equals(Status.DONE)){
                 statusDone++;
             }
         }
