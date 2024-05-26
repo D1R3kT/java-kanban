@@ -66,9 +66,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
-        } else {
         }
-
     }
 
     // методы SubTask
@@ -119,7 +117,6 @@ public class InMemoryTaskManager implements TaskManager {
             saved.setStatus(subTask.getStatus());
             saved.setEpicId(subTask.getEpicId());
             subTasks.put(subTask.getId(), saved);
-        } else {
         }
     }
 
