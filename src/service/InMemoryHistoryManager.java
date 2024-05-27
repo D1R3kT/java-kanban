@@ -7,22 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    // List<Task> history= new ArrayList<>();
-    int size = 0;
-    //LinkedHashMap
 
 
-    private static class Node {
-        Task item;
-        Node next;
-        Node prev;
 
-        Node(Node prev, Task element, Node next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
+
 
     HashMap<Integer, Node> history = new HashMap<>();
     Node first;
@@ -30,9 +18,11 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        Node node = history.get(task.getId());
-        removeNode(node);
-        linkLast(task);
+        if (task != null) {
+            Node node = history.get(task.getId());
+            removeNode(node);
+            linkLast(task);
+        }
     }
 
     @Override
@@ -86,5 +76,16 @@ public class InMemoryHistoryManager implements HistoryManager {
         history.put(task.getId(), newNode);
     }
 
+    private static class Node {
+        Task item;
+        Node next;
+        Node prev;
+
+        Node(Node prev, Task element, Node next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
 }
 
