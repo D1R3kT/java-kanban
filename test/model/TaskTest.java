@@ -10,7 +10,7 @@ public class TaskTest {
 
     @Test
     @DisplayName("Проверка задач по id")
-    void shouldEqualsWithCopy(){
+    void shouldEqualsWithCopy() {
         Task task = new Task(Status.NEW, "task", "desc");
         Task taskExpected = new Task(Status.NEW, "task", "desc");
 
@@ -19,6 +19,6 @@ public class TaskTest {
 
     private static void assertEqualsTask(Task expected, Task actual, String message) {
         assertEquals(expected.getId(), actual.getId(), message + ", id");
-        assertEquals((expected.getName()), actual.getName(), message +", name");
+        assertEquals((expected.getName()), actual.getName(), message + ", name");
     }
 }

@@ -10,7 +10,7 @@ public class SubTaskTest {
 
     @Test
     @DisplayName("Проверка подзадач по id")
-    void shouldEqualsWithCopy(){
+    void shouldEqualsWithCopy() {
         Epic epic = new Epic("epic", "desc");
         SubTask subTask = new SubTask(Status.NEW, "subTask", "desc", epic);
         Task subTaskExpected = new SubTask(Status.NEW, "subTask", "desc", epic);
@@ -20,7 +20,7 @@ public class SubTaskTest {
 
     private static void assertEqualsTask(Task expected, Task actual, String message) {
         assertEquals(expected.getId(), actual.getId(), message + ", id");
-        assertEquals((expected.getName()), actual.getName(), message +", name");
+        assertEquals((expected.getName()), actual.getName(), message + ", name");
     }
 
 }

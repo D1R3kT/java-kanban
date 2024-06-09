@@ -3,28 +3,89 @@ package service;
 import model.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    List<Task> history= new ArrayList<>();
+
+
+
+
+
+    HashMap<Integer, Node> history = new HashMap<>();
+    Node first;
+    Node last;
 
     @Override
     public void add(Task task) {
-
-        if(history.contains(task)){
-            history.remove(task);
+        if (task != null) {
+            Node node = history.get(task.getId());
+            removeNode(node);
+            linkLast(task);
         }
-        if (history.size() < 10) {
+    }
 
-        } else if(history.size() == 10){
-
-            history.remove(0);
-        }
-        history.add(task);
+    @Override
+    public void remove(int id) {
+        Node node = history.get(id);
+        removeNode(node);
     }
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(history);
+        ArrayList<Task> list = new ArrayList<>();
+        Node current = first;
+        while (current != null) {
+            list.add(current.item);
+            current = current.next;
+        }
+        return list;
+    }
+
+    private void removeNode(Node node) {
+
+        if (node != null) {
+            history.remove(node.item.getId());
+            Node prevNode = node.prev;
+            Node nextNode = node.next;
+            if (prevNode == null) {
+                first = nextNode;
+            } else {
+                prevNode.next = nextNode;
+                node.prev = null;
+            }
+            if (nextNode == null) {
+                last = prevNode;
+            } else {
+                nextNode.prev = prevNode;
+                node.next = null;
+            }
+        }
+    }
+
+
+    public void linkLast(Task task) {
+        final Node l = last;
+        final Node newNode = new Node(l, task, null);
+        last = newNode;
+        if (l == null) {
+            first = newNode;
+        } else {
+            l.next = newNode;
+        }
+        history.put(task.getId(), newNode);
+    }
+
+    private static class Node {
+        Task item;
+        Node next;
+        Node prev;
+
+        Node(Node prev, Task element, Node next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 }
+

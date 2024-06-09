@@ -4,18 +4,19 @@ import model.Epic;
 import model.Status;
 import model.SubTask;
 import model.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-     Map<Integer, Task> tasks;
-     Map<Integer, SubTask> subTasks;
-     Map<Integer, Epic> epics;
-     HistoryManager historyManager;
+    Map<Integer, Task> tasks;
+    Map<Integer, SubTask> subTasks;
+    Map<Integer, Epic> epics;
+    HistoryManager historyManager;
 
-    public InMemoryTaskManager(HistoryManager historyManager){
+    public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         this.tasks = new HashMap<>();
         this.subTasks = new HashMap<>();
@@ -63,12 +64,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (task == null) {
             return;
         }
-        if (tasks.containsKey(task.getId())){
+        if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
-        } else {
-            return;
         }
-
     }
 
     // методы SubTask
@@ -113,14 +111,12 @@ public class InMemoryTaskManager implements TaskManager {
         if (saved == null) {
             return;
         }
-        if (subTasks.containsKey(subTask.getId())){
+        if (subTasks.containsKey(subTask.getId())) {
             saved.setName(subTask.getName());
             saved.setDescription(subTask.getDescription());
             saved.setStatus(subTask.getStatus());
             saved.setEpicId(subTask.getEpicId());
             subTasks.put(subTask.getId(), saved);
-        } else {
-            return;
         }
     }
 
@@ -161,13 +157,11 @@ public class InMemoryTaskManager implements TaskManager {
         if (saved == null) {
             return;
         }
-        if (epics.containsKey(epic.getId())){
+        if (epics.containsKey(epic.getId())) {
             saved.setName(epic.getName());
             saved.setDescription(epic.getDescription());
             saved.setStatus(updateStatus(epic));
             epics.put(epic.getId(), saved);
-        } else{
-            return;
         }
 
     }
@@ -182,7 +176,7 @@ public class InMemoryTaskManager implements TaskManager {
         int statusProgress = 0;
 
         for (Integer id : subTasksId) {
-            if (subTasks.get(id).getStatus().equals(Status.NEW)){
+            if (subTasks.get(id).getStatus().equals(Status.NEW)) {
                 statusNew++;
             } else if (subTasks.get(id).getStatus().equals(Status.IN_PROGRESS)) {
                 statusProgress++;
