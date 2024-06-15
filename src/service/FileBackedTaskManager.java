@@ -34,14 +34,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-
-    public void init() {
-        loadFromFile();
-    }
-
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
-        manager.init();
+        manager.loadFromFile();
         return manager;
     }
 
@@ -119,7 +114,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 Files.writeString(Path.of(TASK_CSV), TaskConverter.toString(entry) + "\n", APPEND);
             }
         } catch (IOException exp) {
-            throw new RuntimeException("Ошибка в файле: " + file.getAbsolutePath(), exp);
+            throw new WriteFileException("Ошибка в файле: " + file.getAbsolutePath(), exp);
         }
     }
 
