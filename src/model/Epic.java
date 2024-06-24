@@ -9,10 +9,16 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(Status.NEW, name, description);
+
     }
 
     public Epic(Status status, String name, String description) {
         super(status, name, description);
+    }
+
+    public Epic(int id, String name, Status status, String description) {
+        super(id, name, status, description);
+
     }
 
     public ArrayList<Integer> getSubTasksId() {
@@ -28,6 +34,11 @@ public class Epic extends Task {
     }
 
     @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -40,4 +51,6 @@ public class Epic extends Task {
     public int hashCode() {
         return Objects.hash(super.hashCode(), subTasksId);
     }
+
+
 }

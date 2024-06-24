@@ -62,7 +62,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateTask(Task task) {
         if (task == null) {
-            return;
+            throw new NotFoundException("Задача не найдена");
         }
         if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
@@ -109,7 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void updateSubTask(SubTask subTask) {
         SubTask saved = subTasks.get(subTask.getId());
         if (saved == null) {
-            return;
+            throw new NotFoundException("Не найден эпик");
         }
         if (subTasks.containsKey(subTask.getId())) {
             saved.setName(subTask.getName());
