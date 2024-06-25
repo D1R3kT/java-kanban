@@ -1,5 +1,7 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,8 +18,8 @@ public class Epic extends Task {
         super(status, name, description);
     }
 
-    public Epic(int id, String name, Status status, String description) {
-        super(id, name, status, description);
+    public Epic(int id, String name, Status status, String description, LocalDateTime startTime, Duration duration) {
+        super(id, name, status, description, startTime, duration);
 
     }
 

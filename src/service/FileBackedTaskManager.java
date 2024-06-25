@@ -1,6 +1,7 @@
 package service;
 
 import converter.TaskConverter;
+import exception.WriteFileException;
 import model.*;
 
 import java.io.BufferedReader;
@@ -9,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +111,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         tasks.addAll(getAllSubTasks());
 
         try {
-            Files.writeString(Path.of(TASK_CSV), "id,type,title,status,description,epic\n");
+            Files.writeString(Path.of(TASK_CSV), "id,type,title,status,description,epic,duration,startTime\n");
 
             for (Task entry : tasks) {
                 Files.writeString(Path.of(TASK_CSV), TaskConverter.toString(entry) + "\n", APPEND);
@@ -128,18 +131,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String description = columns[4];
         Integer epicId = null;
         Task task = null;
+
+        Duration duration = Duration.parse(columns[6]);
+
+        LocalDateTime startTime = LocalDateTime.parse(columns[7]);
+
         switch (type) {
             case TASK:
-                task = new Task(id, name, status, description);
+                task = new Task(id, name, status, description, startTime, duration);
                 createTask(task);
                 break;
             case SUBTASK:
                 epicId = Integer.parseInt(columns[5]);
-                task = new SubTask(id, name, status, description, epicId);
+                task = new SubTask(id, name, status, description, epicId, startTime, duration);
                 createSubTask((SubTask) task);
                 break;
             case EPIC:
-                task = new Epic(id, name, status, description);
+                task = new Epic(id, name, status, description, startTime, duration);
 
                 createEpic((Epic) task);
 

@@ -5,13 +5,22 @@ import model.Task;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class InMemoryTaskManagerTest {
+@DisplayName("InMemoryTaskManagerTest")
+public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
+
+    @Override
+    public InMemoryTaskManager createManager() {
+        return new InMemoryTaskManager(new InMemoryHistoryManager());
+    }
+
     EmptyHistoryManager historyManager = new EmptyHistoryManager();
     InMemoryTaskManager memoryTaskManager = new InMemoryTaskManager(historyManager);
 
@@ -30,8 +39,10 @@ public class InMemoryTaskManagerTest {
     @Test
     @DisplayName("Проверка удаления задач")
     void TaskShouldEqualsWithNull() {
-        Task task1 = memoryTaskManager.createTask(new Task(Status.NEW, "учеба", "12341"));
-        Task task2 = memoryTaskManager.createTask(new Task(Status.NEW, "работа", "1234"));
+        Task task1 = memoryTaskManager.createTask(new Task(Status.NEW, "учеба", "12341",
+                LocalDateTime.parse("2026-12-21T21:21:21"), Duration.ofMinutes(15)));
+        Task task2 = memoryTaskManager.createTask(new Task(Status.NEW, "работа", "1234",
+                LocalDateTime.parse("2026-12-22T21:21:21"), Duration.ofMinutes(15)));
         assertNotNull(memoryTaskManager.tasks);
 
         memoryTaskManager.removeAllTasks();
@@ -90,6 +101,4 @@ public class InMemoryTaskManagerTest {
             return Collections.emptyList();
         }
     }
-
-
 }

@@ -7,6 +7,8 @@ import service.Manager;
 import service.TaskManager;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 
 public class Main {
@@ -16,13 +18,15 @@ public class Main {
 
         TaskManager taskManager = Manager.getDefaults();
         //Task
-        Task task = taskManager.createTask(new Task(Status.NEW, "Новая задача", "описание"));
+        Task task = taskManager.createTask(new Task(Status.NEW, "Новая задача", "описание", LocalDateTime.parse("2024-12-21T21:21:21"), Duration.ofMinutes(15)));
         System.out.println("Create task" + task);
 
-        Task task1 = taskManager.createTask(new Task(Status.NEW, "учеба", "12341"));
+        Task task1 = taskManager.createTask(new Task(Status.NEW, "учеба", "12341",
+                LocalDateTime.parse("2025-12-20T21:21:21"), Duration.ofMinutes(105)));
         System.out.println("created " + task1);
 
-        Task task2 = taskManager.createTask(new Task(Status.NEW, "работа", "1234"));
+        Task task2 = taskManager.createTask(new Task(Status.NEW, "работа", "1234",
+                LocalDateTime.parse("2026-12-21T21:21:21"), Duration.ofMinutes(15)));
         System.out.println("created " + task2);
 
         Task taskFromManager = taskManager.getTaskById(task.getId());

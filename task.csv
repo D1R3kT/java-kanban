@@ -1,11 +1,5 @@
-id,type,title,status,description,epic
-1,TASK,новая задача,IN_PROGRESS,о,null
-2,TASK,учеба,NEW,12341,null
-3,TASK,работа,NEW,1234,null
-4,EPIC,Новый эпик,NEW,описание,null
-5,EPIC,Эпик1,IN_PROGRESS,Описание1,null
-6,EPIC,Эпик2,IN_PROGRESS,Описание2,null
-7,SUBTASK,Новая задача,NEW,описание подзадачи,4
-8,SUBTASK,Подзадача 1,DONE,Описание1,5
-9,SUBTASK,Подзадача 2,NEW,Описание2,5
-10,SUBTASK,Подзадача 1,IN_PROGRESS,Описание3,6
+id,type,title,status,description,epic,duration,startTime
+1,TASK,Новая задача,NEW,описание,null,PT15M,2024-12-21T21:21:21
+2,EPIC,Новый эпик,NEW,описание,null,PT15M,2024-06-25T15:16:07.083061
+3,SUBTASK,Новая подзадача №1,NEW,описание подзадачи,2,PT15M,2024-06-25T15:16:07.083647
+4,SUBTASK,Новая подзадача №2 ,NEW,описание подзадачи,2,PT15M,2026-12-21T21:21:21
