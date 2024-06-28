@@ -48,4 +48,7 @@ public interface TaskManager {
 
     SubTask getAllSubTasks(Epic epic);
 
+    List<Task> getHistory();
+
+    void removeTaskFromViewed(int id);
 }

@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class Epic extends Task {
 
+    LocalDateTime endTime;
+
     ArrayList<Integer> subTasksId = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -33,6 +35,18 @@ public class Epic extends Task {
 
     public void removeSubTaskId(SubTask subTasks) {
         this.subTasksId.remove(subTasks.getId());
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
     @Override

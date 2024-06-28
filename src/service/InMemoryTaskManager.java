@@ -7,6 +7,8 @@ import model.Status;
 import model.SubTask;
 import model.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -16,6 +18,7 @@ public class InMemoryTaskManager implements TaskManager {
     HistoryManager historyManager;
 
     TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -61,6 +64,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         tasks.put(task.getId(), task);
         return task;
+
     }
 
     @Override
@@ -173,13 +177,17 @@ public class InMemoryTaskManager implements TaskManager {
     public void removeByIdEpic(int id) {
 
         Epic deleteEpic = epics.get(id);
-        ArrayList<Integer> subTaskDeleteList = deleteEpic.getSubTasksId();
-
-        for (Integer i : subTaskDeleteList) {
-            subTasks.remove(i);
+        if (deleteEpic != null) {
+            deleteEpic.getSubTasksId().forEach(subTaskId -> {
+                prioritizedTasks.removeIf(task -> Objects.equals(task.getId(), subTaskId));
+                subTasks.remove(subTaskId);
+                historyManager.remove(subTaskId);
+            });
+            epics.remove(id);
+            historyManager.remove(id);
+        } else {
+            System.out.println("Не найден эпик с id: " + id);
         }
-
-        epics.remove(id);
     }
 
     @Override
@@ -201,6 +209,10 @@ public class InMemoryTaskManager implements TaskManager {
     public Status updateStatus(Epic epic) {
         ArrayList<Integer> subTasksId = epic.getSubTasksId();
 
+        LocalDateTime startTimeOfEpic = subTasks.get(subTasksId.getFirst()).getStartTime();
+        LocalDateTime endTimeOfEpic = subTasks.get(subTasksId.getFirst()).getEndTime();
+        Duration durationOfEpic = Duration.ofMinutes(0);
+
         Status status;
         int statusNew = 0;
         int statusDone = 0;
@@ -214,7 +226,25 @@ public class InMemoryTaskManager implements TaskManager {
             } else if (subTasks.get(id).getStatus().equals(Status.DONE)) {
                 statusDone++;
             }
+
+            // время начала эпика
+            if (subTasks.get(id).getStartTime() != null &&
+                    (startTimeOfEpic == null || subTasks.get(id).getStartTime().isBefore(startTimeOfEpic))) {
+                startTimeOfEpic = subTasks.get(id).getStartTime();
+            }
+
+            // время окончания эпика
+            if (subTasks.get(id).getEndTime() != null &&
+                    (endTimeOfEpic == null || subTasks.get(id).getEndTime().isAfter(endTimeOfEpic))) {
+                endTimeOfEpic = subTasks.get(id).getEndTime();
+            }
+
+            // продолжительность
+            if (subTasks.get(id).getDuration() != null) {
+                durationOfEpic = durationOfEpic.plusMinutes(subTasks.get(id).getDuration().toMinutes());
+            }
         }
+
 
         if (statusDone == 0 && statusProgress == 0) {
             status = Status.NEW;
@@ -223,6 +253,10 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             status = Status.IN_PROGRESS;
         }
+
+        epic.setStartTime(startTimeOfEpic);
+        epic.setDuration(durationOfEpic);
+        epic.setEndTime(endTimeOfEpic);
 
         return status;
     }
@@ -248,4 +282,13 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
+    }
+
+    @Override
+    public void removeTaskFromViewed(int id) {
+        historyManager.remove(id);
+    }
 }
