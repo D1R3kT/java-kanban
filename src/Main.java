@@ -47,7 +47,8 @@ public class Main {
         System.out.println("epic2: " + epic2);
 
         //SubTask
-        SubTask subTask = taskManager.createSubTask(new SubTask(Status.NEW, "Новая задача", "описание подзадачи", epic, LocalDateTime.parse("2025-12-21T21:21:21"), Duration.ofMinutes(30)));
+        SubTask subTask = taskManager.createSubTask(new SubTask(Status.NEW, "Новая задача",
+                "описание подзадачи", epic, LocalDateTime.parse("2025-12-21T21:21:21"), Duration.ofMinutes(30)));
         taskManager.updateEpic(epic);
         taskManager.updateSubTask(subTask);
         SubTask subTask1 = taskManager.createSubTask(new SubTask(Status.DONE, "Подзадача 1", "Описание1", epic1, LocalDateTime.parse("2025-12-22T21:21:21"), Duration.ofMinutes(30)));

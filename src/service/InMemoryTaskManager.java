@@ -73,7 +73,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public Task updateTask(Task task) {
         Task original = tasks.get(task.getId());
 
         if (original == null) {
@@ -85,6 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         tasks.put(task.getId(), task);
 
+        return original;
     }
 
     // методы SubTask
@@ -128,7 +129,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) {
+    public SubTask updateSubTask(SubTask subTask) {
         SubTask saved = subTasks.get(subTask.getId());
         if (saved == null) {
             throw new NotFoundException("Не найден эпик");
@@ -145,6 +146,7 @@ public class InMemoryTaskManager implements TaskManager {
             prioritizedTasks.add(subTask);
             subTasks.put(subTask.getId(), saved);
         }
+        return saved;
     }
 
     // методы Epic
@@ -191,7 +193,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic) {
+    public Epic updateEpic(Epic epic) {
         Epic saved = epics.get(epic.getId());
         if (saved == null) {
             throw new NotFoundException("Не найден эпик: " + epic.getId());
@@ -203,6 +205,7 @@ public class InMemoryTaskManager implements TaskManager {
             epics.put(epic.getId(), saved);
         }
 
+        return saved;
     }
 
     @Override
@@ -290,5 +293,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTaskFromViewed(int id) {
         historyManager.remove(id);
+    }
+
+    @Override
+    public TreeSet<Task> getPrioritisedTasks() {
+        return prioritizedTasks;
     }
 }
