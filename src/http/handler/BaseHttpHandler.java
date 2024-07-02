@@ -4,6 +4,7 @@ package http.handler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import enums.Endpoint;
 import http.adapter.DurationTypeAdapter;
 import http.adapter.LocalTimeTypeAdapter;
@@ -13,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class BaseHttpHandler {
+public abstract class BaseHttpHandler implements HttpHandler {
     Gson gson;
 
     public BaseHttpHandler() {
@@ -43,6 +44,10 @@ public class BaseHttpHandler {
 
     protected void sendOK(HttpExchange httpExchange) throws IOException {
         sendResponse(httpExchange, 200);
+    }
+
+    protected void sendNotAllowed(HttpExchange httpExchange, String text) throws IOException {
+        sendResponse(httpExchange, 405, text);
     }
 
     private void sendResponse(HttpExchange httpExchange, int code) throws IOException {

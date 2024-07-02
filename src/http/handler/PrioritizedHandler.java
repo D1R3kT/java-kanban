@@ -17,6 +17,8 @@ public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         if (exchange.getRequestMethod().equals("GET")) {
             sendText(exchange, gson.toJson(taskManager.getPrioritisedTasks()));
+        } else {
+            sendNotAllowed(exchange, "Method not allowed");
         }
     }
 }
