@@ -6,6 +6,7 @@ import model.SubTask;
 import model.Task;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     List<Task> getAllTasks();
@@ -18,7 +19,7 @@ public interface TaskManager {
 
     void removeByIdTask(int id);
 
-    void updateTask(Task task);
+    Task updateTask(Task task);
 
     List<SubTask> getAllSubTasks();
 
@@ -30,7 +31,7 @@ public interface TaskManager {
 
     void removeByIdSubTask(int id);
 
-    void updateSubTask(SubTask subTask);
+    SubTask updateSubTask(SubTask subTask);
 
     List<Epic> getAllEpics();
 
@@ -42,7 +43,7 @@ public interface TaskManager {
 
     void removeByIdEpic(int id);
 
-    void updateEpic(Epic epic);
+    Epic updateEpic(Epic epic);
 
     Status updateStatus(Epic epic);
 
@@ -51,4 +52,6 @@ public interface TaskManager {
     List<Task> getHistory();
 
     void removeTaskFromViewed(int id);
+
+    TreeSet<Task> getPrioritisedTasks();
 }
